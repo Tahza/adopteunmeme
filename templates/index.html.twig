@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <title>AdopteUnMeme</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <SCRIPT SRC="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></SCRIPT>
+    </head>
+    <body>
+
+
+
+    <!-- HEADER -->
+
+    <!-- Contenu du filtre de recherche -->
+    <div id="contenu">
+        <!-- Titre HTML -->
+        <h1>Rechercher un Meme</h1>
+
+        <div align="center">
+
+                <input type="text" name="search" id="search" placeholder="Rechercher un Meme..." class="form-control"
+                autocomplete="off">
+        </div>
+                <ul class="list-group" id="result"></ul>
+
+
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
+
+
+
+    </body>
+</html>
+<script>
+$(document).ready(function() {
+    $('#search').keyup(function () {
+        var searchField = $('#search').val();
+        $('#result').empty();
+
+        $.getJSON('https://api.imgflip.com/get_memes', function (data) {
+            var memes = data.data.memes;
+            console.log(memes);
+
+            $.each(memes, function (index, meme) {
+                if (meme.name.toLowerCase().indexOf(searchField.toLowerCase()) > -1) {
+                    console.log(meme);
+                    $('#result').append('<li class="list-group-item"><img src="' + (meme.url) + '" ' +
+                            'height="100" width="100" ' +
+                            'class="img-thumbnail"> ' + meme.name + ' </li> ');
+                }
+            });
+
+        });
+    });
+});
+</script>
+
